@@ -22,11 +22,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Lzcdebear/better-dsh-session-deletetool.git"
+    "url": "git+https://github.com/Zhangkaiwen2001/better-dsh-session-deletetool.git"
   },
-  "homepage": "https://github.com/Lzcdebear/better-dsh-session-deletetool#readme",
+  "homepage": "https://github.com/Zhangkaiwen2001/better-dsh-session-deletetool#readme",
   "bugs": {
-    "url": "https://github.com/Lzcdebear/better-dsh-session-deletetool/issues"
+    "url": "https://github.com/Zhangkaiwen2001/better-dsh-session-deletetool/issues"
   },
   "exports": {
     ".": "./host.js",

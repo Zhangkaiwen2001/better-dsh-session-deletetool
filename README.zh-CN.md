@@ -1,6 +1,6 @@
 # better-dsh-session-deletetool
 
-> **本地派生版。** 上游原版是 [Lzcdebear/better-dsh-session-deletetool](https://github.com/Lzcdebear/better-dsh-session-deletetool)（npm 同名包），本目录是它的一个 fork：0.5.2 及之前的条目属于上游，0.6.0 起是本地改动。作者栏保留原作者署名，本地改动不享有他的署名。
+> **本地派生版。** 上游原版是 [Lzcdebear/better-dsh-session-deletetool](https://github.com/Lzcdebear/better-dsh-session-deletetool)（npm 同名包），本目录是它的一个 fork：0.5.2 及之前的条目属于上游，0.6.0 起是本地改动。作者栏保留原作者署名，本地改动不享有他的署名。本仓库地址：[Zhangkaiwen2001/better-dsh-session-deletetool](https://github.com/Zhangkaiwen2001/better-dsh-session-deletetool)。
 >
 > 装法是 profile 的 `link:` 本地路径依赖，DSH 的插件管理**没有任何更新动作**（只有 list / set / install / remove），所以**这个版本不会被覆盖**。唯一会顶掉它的情况是自己对这个插件重装、且 spec 写成 npm 上的同名包名——别那么做。
 
@@ -89,64 +89,52 @@ DSH 只能**归档**会话：归档把那一行从侧边栏隐藏，工件一样
 - **`request-images` 那条通道是可再生的缓存。** 它按 *请求* 哈希键控，不是附件 digest，所以任何日志都无法把一条记录归属给自己。它按时间回收（超过一周），从不按会话，字节需要时会重新生成。
 
 ## 安装
+装这个派生版有三条路，都走 DSH 自带的插件管理，它接受一个安装 spec（`@deepseek-ai/dsh-plugin-manager`）。
 
-下面几条都走 DSH 自带的插件管理，它接受一个安装 spec（`@deepseek-ai/dsh-plugin-manager`）：registry 包名、git 主机简写、仓库 URL、tarball，或者本地绝对路径。npm 那条也可以直接用 `npm install` 装进 profile 目录。按你的网络情况挑一条。
+**注意：这个 fork 没有发到 npm。** npm 上的 `better-dsh-session-deletetool` 是上游原版，装它会得到上游代码，不是这里的改动。
 
-### 1. 从 npm 装（包名 `better-dsh-session-deletetool`）
-
-走 registry，也是唯一不需要访问 github.com 的：
-
-```
-npm install better-dsh-session-deletetool
-```
-
-DSH 自带的插件管理直接接受 registry 包名，在应用里走这条更省事，它会往 profile 记一条依赖并重载。
-
-- **在应用里**：设置 → 插件 → 安装入口，粘贴 `better-dsh-session-deletetool`。
-- **在会话里**：`plugin_manager { action: "install_bundle", target: "better-dsh-session-deletetool" }`。
-
-要钉版本就照 npm 的写法：`better-dsh-session-deletetool@0.4.0`。
-
-### 2. 直接从 GitHub 装（需要能访问 github.com）
+### 1. 从这个 GitHub 仓库装（需要能访问 github.com）
 
 spec：
 
 ```
-github:Lzcdebear/better-dsh-session-deletetool
+github:Zhangkaiwen2001/better-dsh-session-deletetool
 ```
 
 等价写法：
 
 ```
-https://github.com/Lzcdebear/better-dsh-session-deletetool
+https://github.com/Zhangkaiwen2001/better-dsh-session-deletetool
 ```
 
 把 spec 交给 DSH：
 
 - **在应用里**：设置 → 插件 → 安装入口，粘贴 spec。（插件管理界面和 `plugin_manager` 工具接受的是同一个字符串。）
-- **在会话里**：让 Agent 装 —— 工具调用是 `plugin_manager`，`action: "install_bundle"`，`target: "github:Lzcdebear/better-dsh-session-deletetool"`。
+- **在会话里**：让 Agent 装 —— 工具调用是 `plugin_manager`，`action: "install_bundle"`，`target: "github:Zhangkaiwen2001/better-dsh-session-deletetool"`。
 
-可以用 `#` 钉住某个 ref：`github:Lzcdebear/better-dsh-session-deletetool#v0.1.0`。
+可以用 `#` 钉住某个 ref：`github:Zhangkaiwen2001/better-dsh-session-deletetool#main`。
 
-连接检查失败时 DSH 会给出一个有界的日志路径。如果这台机器根本连不上 github.com，走第 1、3 或第 4 条，或者先给 git 配上代理（`git config --global http.proxy http://127.0.0.1:7890`）。
+上游原版在 [Lzcdebear/better-dsh-session-deletetool](https://github.com/Lzcdebear/better-dsh-session-deletetool)，npm 包名与这里同名——想要上游代码才去装那个。
 
-### 3. 从本地副本装（离线可用）
-
-把仓库下载下来（ZIP 或 `git clone`），解压到任意位置，然后把**绝对目录**交给插件管理：
+### 2. 从发布 tarball 装（git 不可用但 HTTPS 通）
 
 ```
-plugin_manager { action: "install_bundle", target: "D:\\plugins\\better-dsh-session-deletetool" }
+https://github.com/Zhangkaiwen2001/better-dsh-session-deletetool/archive/refs/heads/main.tar.gz
 ```
 
-DSH 会记一条 `link:` 依赖并重载 profile。开发这个插件用的就是这条路，网络受限时也走它。
+安装入口同第 1 条。
 
-### 4. 从发布 tarball 装
+### 3. 从本地副本装（离线可用，开发就走这条）
+
+把仓库 clone 下来，然后把**绝对目录**交给插件管理：
 
 ```
-https://github.com/Lzcdebear/better-dsh-session-deletetool/archive/refs/heads/main.tar.gz
+plugin_manager { action: "install_bundle", target: "D:\plugins\better-dsh-session-deletetool" }
 ```
 
-安装入口同第 2 条；git 不可用但 HTTPS 通的时候好用。
+DSH 会记一条 `link:` 依赖并重载 profile。**本机现在就是这么装的**——profile 的 `package.json` 里写着指向这个工作区的 `link:` 路径，`node_modules/` 下是对该目录的 symlink，所以改完本地文件重启 DSH 就是新代码，不需要重新安装。
+
+连接检查失败时 DSH 会给出一个有界的日志路径。如果这台机器根本连不上 github.com，走第 3 条，或者先给 git 配上代理（`git config --global http.proxy http://127.0.0.1:7890`）。
 
 ### 装完之后
 

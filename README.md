@@ -3,7 +3,8 @@
 > **Local fork.** The upstream original is [Lzcdebear/better-dsh-session-deletetool](https://github.com/Lzcdebear/better-dsh-session-deletetool)
 > (the same name on npm); this directory is a fork of it. Changelog entries up to 0.5.2 belong to
 > upstream, 0.6.0 onward are local changes. The author field keeps the original author's credit; the
-> local changes do not carry his name.
+> local changes do not carry his name. This repository lives at
+> [Zhangkaiwen2001/better-dsh-session-deletetool](https://github.com/Zhangkaiwen2001/better-dsh-session-deletetool).
 >
 > It is installed as the profile's `link:` local-path dependency, and DSH's plugin manager has **no
 > update action at all** (only list / set / install / remove) — so **this version cannot be
@@ -198,38 +199,24 @@ sessions with "switch away first", which wrongly blocked conversations that were
 ## Install
 
 Everything below goes through DSH's own plugin manager, which accepts an install spec
-(`@deepseek-ai/dsh-plugin-manager`): a registry name, a git host shorthand, a repository URL, a
-tarball, or an absolute local path. The npm route also works with a plain `npm install`, into the
-profile directory. Pick whichever route your network allows.
+Three routes to install this fork, all through DSH's own plugin manager, which accepts an install
+spec (`@deepseek-ai/dsh-plugin-manager`).
 
-### 1. From npm (published as `better-dsh-session-deletetool`)
+**This fork is not published to npm.** The `better-dsh-session-deletetool` on npm is the upstream
+original; installing that name from the registry gives you upstream code, not the changes here.
 
-The registry route, and the only one that does not need github.com:
-
-```
-npm install better-dsh-session-deletetool
-```
-
-DSH's own plugin manager takes the registry name directly, which is the better route inside the app:
-it records the dependency in the profile and reloads it.
-
-- **In the app:** Settings → Plugins → the install entry, paste `better-dsh-session-deletetool`.
-- **Through an agent session:** `plugin_manager { action: "install_bundle", target: "better-dsh-session-deletetool" }`.
-
-Pin a version the way npm writes it: `better-dsh-session-deletetool@0.4.0`.
-
-### 2. Straight from GitHub (needs github.com reachable)
+### 1. From this GitHub repository (needs github.com reachable)
 
 Spec:
 
 ```
-github:Lzcdebear/better-dsh-session-deletetool
+github:Zhangkaiwen2001/better-dsh-session-deletetool
 ```
 
 or, equivalently:
 
 ```
-https://github.com/Lzcdebear/better-dsh-session-deletetool
+https://github.com/Zhangkaiwen2001/better-dsh-session-deletetool
 ```
 
 Give it to DSH:
@@ -237,35 +224,37 @@ Give it to DSH:
 - **In the app:** Settings → Plugins → the install entry, paste the spec. (The Plugin Manager UI and
   the `plugin_manager` tool take exactly the same spec string.)
 - **Through an agent session:** ask the agent to install it — the tool call is `plugin_manager` with
-  `action: "install_bundle"` and `target: "github:Lzcdebear/better-dsh-session-deletetool"`.
+  `action: "install_bundle"` and `target: "github:Zhangkaiwen2001/better-dsh-session-deletetool"`.
 
-Pin a ref with `#`: `github:Lzcdebear/better-dsh-session-deletetool#v0.1.0`.
+Pin a ref with `#`: `github:Zhangkaiwen2001/better-dsh-session-deletetool#main`.
+
+The upstream original lives at [Lzcdebear/better-dsh-session-deletetool](https://github.com/Lzcdebear/better-dsh-session-deletetool)
+and uses the same npm package name — install that one only if you want upstream code.
+
+### 2. From the release tarball (git unavailable but HTTPS is)
+
+```
+https://github.com/Zhangkaiwen2001/better-dsh-session-deletetool/archive/refs/heads/main.tar.gz
+```
+
+Same install entry as route 1.
+
+### 3. From a local copy (works offline; this is the development route)
+
+Clone the repository, then install the **absolute directory**:
+
+```
+plugin_manager { action: "install_bundle", target: "D:\plugins\better-dsh-session-deletetool" }
+```
+
+DSH records a `link:` dependency and reloads the profile. **This is how the plugin is installed on
+this machine right now** — the profile's `package.json` names a `link:` path into this workspace and
+`node_modules/` holds a symlink to it, so editing the local files and restarting DSH is all a reload
+takes; no reinstall is needed.
 
 If the connection check fails, DSH reports a bounded log path. On a network where github.com is not
-reachable, use route 1, 3 or 4 — or point git at your proxy first
+reachable, use route 3 — or point git at your proxy first
 (`git config --global http.proxy http://127.0.0.1:7890`).
-
-### 3. From a local copy (works offline)
-
-Download the repository (ZIP or `git clone`), unpack it anywhere, then install the **absolute
-directory**:
-
-```
-plugin_manager { action: "install_bundle", target: "D:\\plugins\\better-dsh-session-deletetool" }
-```
-
-DSH records a `link:` dependency and reloads the profile. This is the route used to develop the
-plugin, and the one to use behind a restrictive network.
-
-### 4. From the release tarball
-
-```
-https://github.com/Lzcdebear/better-dsh-session-deletetool/archive/refs/heads/main.tar.gz
-```
-
-Same install entry as route 2; useful when git is unavailable but HTTPS is not.
-
-### After installing
 
 The Host half loads with the profile. The Client half appears after the page is refreshed. The row
 shows up in the session `⋯` menu as **删除会话 / Delete conversation**. The sidebar foot gains nothing

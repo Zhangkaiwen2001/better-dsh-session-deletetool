@@ -2,6 +2,7 @@
 
 > **这是本地派生版。** 上游原版是 [Lzcdebear/better-dsh-session-deletetool](https://github.com/Lzcdebear/better-dsh-session-deletetool)
 > （npm 同名包），本目录是它的一个 fork：0.5.2 之前的条目属于上游，0.6.0 起是本地改动。
+> 本仓库：[Zhangkaiwen2001/better-dsh-session-deletetool](https://github.com/Zhangkaiwen2001/better-dsh-session-deletetool)。
 > 装法是 profile 的 `link:` 本地路径依赖，DSH 的插件管理没有任何更新动作，所以**这个版本不会被覆盖**。
 
 ## 0.6.0
