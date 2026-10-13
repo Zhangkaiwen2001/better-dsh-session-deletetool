@@ -1,0 +1,8 @@
+node_modules/
+*.log
+.DS_Store
+Thumbs.db
+
+# Local fork of Lzcdebear/better-dsh-session-deletetool.
+# Installed as the profile's `link:` local-path dependency; DSH's plugin manager
+# has no update action, so nothing here is ever overwritten by an upstream release.
